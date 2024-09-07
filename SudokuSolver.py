@@ -34,7 +34,6 @@ class SudokuGenerator:
         if not empty_loc:
             self.steps.append(board.copy())  # Puzzle solved
             return True
-        
         row, col = empty_loc
         numbers = list(range(1, 10))
         random.shuffle(numbers)  # Shuffle numbers for random insertion
@@ -47,7 +46,6 @@ class SudokuGenerator:
                     return True
                 board[row, col] = 0
                 self.steps.append(board.copy())  # Record backtracking
-        
         return False
 
     def solve_and_count_solutions(self, board, count=0):
@@ -55,7 +53,6 @@ class SudokuGenerator:
         empty_loc = self.find_empty_location(board)
         if not empty_loc:
             return count + 1
-        
         row, col = empty_loc
         numbers = list(range(1, 10))
         random.shuffle(numbers)  # Shuffle numbers for random insertion
@@ -67,7 +64,6 @@ class SudokuGenerator:
                 if count > 1:
                     return count
                 board[row, col] = 0
-        
         return count
 
     def generate_full_sudoku(self):
@@ -82,7 +78,6 @@ class SudokuGenerator:
             row, col = random.randint(0, 8), random.randint(0, 8)
             while self.board[row, col] == 0:
                 row, col = random.randint(0, 8), random.randint(0, 8)
-            
             backup = self.board[row, col]
             self.board[row, col] = 0
             
@@ -125,7 +120,6 @@ class SudokuGenerator:
                 value = board[row, col]
                 if value != 0:
                     ax.text(col + 0.5, 8.5 - row, str(value), ha='center', va='center', fontsize=20)
-        
         ax.invert_yaxis()
 
 def animate_solution(generator, steps):
@@ -139,7 +133,6 @@ def animate_solution(generator, steps):
     if not steps:
         print("No steps to animate. The Sudoku may not have been solved properly.")
         return
-    
     ani = animation.FuncAnimation(fig, update, frames=len(steps), repeat=False, interval=500)  # Adjusted interval
     plt.show()
 
@@ -152,12 +145,10 @@ def main():
 
     generator = SudokuGenerator()
     sudoku_board = generator.generate_sudoku(difficulty)
-
     print("\nGenerated Sudoku:")
     fig, ax = plt.subplots(figsize=(6, 6))
     generator.plot_board(sudoku_board, ax)
     plt.show(block=False)  # Show the initial Sudoku board without blocking
-
     print("\nSolving Sudoku step-by-step...")
     generator.steps.clear()  # Clear steps before solving
     generator.solve_sudoku_step_by_step(sudoku_board)  # Re-run solving
